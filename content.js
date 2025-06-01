@@ -1,36 +1,44 @@
+let currentIcon = null;
+
 function createIcon(x, y, selectedText) {
-  const icon = document.createElement('div');
-  icon.textContent = '💾';
-  icon.className = 'text-marker-icon';
+  removeCurrentIcon();
+  const icon = document.createElement("div");
+  icon.textContent = "💾";
+  icon.className = "text-marker-icon";
   icon.style.left = `${x + 10}px`;
   icon.style.top = `${y + 10}px`;
+  icon.title = "Klicke hier, um den markierten Text zu speichern";
 
-  // ✅ Add hover text (tooltip)
-  icon.title = 'Klicke hier, um den markierten Text zu speichern';
-
-  icon.addEventListener('click', () => {
+  icon.addEventListener("click", () => {
     createModal(selectedText);
-    document.body.removeChild(icon);
+    removeCurrentIcon();
   });
 
   document.body.appendChild(icon);
-  icon.classList.add('animate-icon');
+  icon.classList.add("animate-icon");
+  currentIcon = icon; // <<< wichtig!
 }
 
+function removeCurrentIcon() {
+  if (currentIcon && currentIcon.parentElement) {
+    currentIcon.remove();
+    currentIcon = null;
+  }
+}
 
 function createModal(text) {
-  const overlay = document.createElement('div');
-  overlay.className = 'text-marker-overlay';
+  const overlay = document.createElement("div");
+  overlay.className = "text-marker-overlay";
 
-  const modal = document.createElement('div');
-  modal.className = 'text-marker-modal';
+  const modal = document.createElement("div");
+  modal.className = "text-marker-modal";
 
-  const textarea = document.createElement('textarea');
+  const textarea = document.createElement("textarea");
   textarea.value = text;
 
-  const saveBtn = document.createElement('button');
-  saveBtn.textContent = 'Speichern';
-  saveBtn.addEventListener('click', () => {
+  const saveBtn = document.createElement("button");
+  saveBtn.textContent = "Speichern";
+  saveBtn.addEventListener("click", () => {
     const finalText = textarea.value.trim();
     if (finalText.length > 0) {
       chrome.storage.sync.get({ savedTexts: [] }, (data) => {
@@ -41,9 +49,9 @@ function createModal(text) {
     document.body.removeChild(overlay);
   });
 
-  const cancelBtn = document.createElement('button');
-  cancelBtn.textContent = 'Abbrechen';
-  cancelBtn.addEventListener('click', () => {
+  const cancelBtn = document.createElement("button");
+  cancelBtn.textContent = "Abbrechen";
+  cancelBtn.addEventListener("click", () => {
     document.body.removeChild(overlay);
   });
 
@@ -54,15 +62,22 @@ function createModal(text) {
   document.body.appendChild(overlay);
 }
 
-document.addEventListener('mouseup', (event) => {
-  chrome.storage.sync.get(['enabled'], (result) => {
-    if (!result.enabled) return;
+// Hauptlistener
+document.addEventListener("mouseup", () => {
+  setTimeout(() => {
+    chrome.storage.sync.get(["enabled"], (result) => {
+      if (!result.enabled) return;
 
-    const selection = window.getSelection();
-    const text = selection.toString().trim();
-    if (text.length > 0) {
+      const selection = window.getSelection();
+      const text = selection.toString().trim();
+
+      if (text.length === 0) {
+        removeCurrentIcon();
+        return;
+      }
+
       const rect = selection.getRangeAt(0).getBoundingClientRect();
       createIcon(rect.right + window.scrollX, rect.top + window.scrollY, text);
-    }
-  });
+    });
+  }, 0); // Verzögert, damit Markierung wirklich entfernt ist
 });
