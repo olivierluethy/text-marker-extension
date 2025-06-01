@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gespeicherte Texte</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        width: 320px;
+      }
+      #texts {
+        margin-top: 10px;
+      }
+      .text-item {
+        background: #f0f0f0;
+        padding: 8px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        position: relative;
+      }
+      .text-actions {
+        margin-top: 6px;
+      }
+      .text-actions button {
+        margin-right: 6px;
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+      textarea {
+        width: 100%;
+        height: 80px;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body>
+    <label>
+      <input type="checkbox" id="toggle" />
+      Text-Marker aktivieren
+    </label>
+
+    <div id="texts"></div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
