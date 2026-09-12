@@ -1,6 +1,6 @@
 # 💾 Text Marker – Chrome-Erweiterung zum Markieren, Bearbeiten und Speichern von Text
 
-[![License](https://img.shields.io/github/license/BaskLash/text-marker-extension)](LICENSE)
+[![License](https://img.shields.io/github/license/olivierluethy/text-marker-extension)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0-blue.svg)]()
 [![Chrome](https://img.shields.io/badge/Chrome-unterstützt-brightgreen.svg)]()
 [![Made for PromptIn](https://img.shields.io/badge/Built_for-PromptIn-blueviolet)]()
@@ -49,7 +49,7 @@ Durch die Entwicklung dieser isolierten Erweiterung konnte ich:
 
 1. 📁 Repository herunterladen oder klonen:
    ```bash
-   git clone https://github.com/DEIN_GITHUB_USERNAME/text-marker-extension.git
+   git clone https://github.com/olivierluethy/text-marker-extension.git
 
 2. 🌐 In Chrome `chrome://extensions` öffnen
 
